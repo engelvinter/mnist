@@ -1,4 +1,4 @@
-Loading images right from file:
+Loading my own digits as images right from file:
 
 0 - 9
 5 - 5
@@ -11,7 +11,7 @@ Loading images right from file:
 3 - 3
 6 - 6
 
-Loading images, deskew, padding, scaling:
+Loading my own digits as images, then deskew, padding, scaling:
 
 0 - 0
 5 - 5
@@ -20,6 +20,19 @@ Loading images, deskew, padding, scaling:
 4 - 4
 1 - 1
 7 - 2
+2 - 2
+3 - 3
+6 - 6
+
+Loading the mnist images and my own digits as images, then deskew, padding, scaling:
+
+0 - 0
+5 - 5
+9 - 9
+8 - 8
+4 - 4
+1 - 1
+7 - 7
 2 - 2
 3 - 3
 6 - 6
