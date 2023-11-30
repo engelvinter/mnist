@@ -84,6 +84,12 @@ def symmetric(img : np.ndarray) -> np.ndarray:
     img3 = reshape_28x28(img2)
     return img3
 
+def invert(images : np.ndarray) -> np.ndarray:
+    (len, _, _) = images.shape
+    for i in range(0, len):
+        images[i] = cv2.bitwise_not(images[i])
+    return images
+    
 def adjust_images(images : np.ndarray) -> np.ndarray:
     (len, _, _) = images.shape
     for i in range(0, len):
