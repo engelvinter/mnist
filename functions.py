@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from typing import List
 
 def list_png_files(path : str) -> List[str]:
-    png_files = [file for file in os.listdir(path) if file.endswith('.png')]
+    png_files = [file for file in os.listdir(path) if file.endswith('.png') or file.endswith('.jpg')]
     return png_files
 
 def read_png_files(path : str) -> np.ndarray:
