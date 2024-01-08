@@ -21,14 +21,14 @@ def list_image_files(path : str) -> List[str]:
     files = [file for file in os.listdir(path) if file.endswith('.png') or file.endswith('.jpg')]
     return files
 
-def read_image_files(path : str) -> np.ndarray:
+def read_image_files(path : str) -> (List[str], np.ndarray):
     """Reads the 28x28 jpg/png images in the specified path and convert them to gray scale
 
     Parameters:
     path: the full path to the images
 
     Returns:
-    a numpy array (3 dim) of the gray-scale images
+    a tuple containg a list of filenames and a numpy array (3 dim) of the gray-scale images
     """
     png_files = list_image_files(path)
     images = np.empty((len(png_files), SZ, SZ), dtype=np.uint8)
@@ -37,7 +37,7 @@ def read_image_files(path : str) -> np.ndarray:
         image = Image.open(file_path).convert('L')  # Convert to grayscale ('L' mode)
         image_array = np.array(image)
         images[i] = image_array
-    return images
+    return (png_files, images)
 
 def deskew(img : np.ndarray) -> np.ndarray:
     """Deskew an image.
@@ -109,7 +109,7 @@ def reshape_20x20(img : np.ndarray) -> np.ndarray:
     return reshaped_img
 
 def reshape_28x28(img : np.ndarray) -> np.ndarray:
-    """Reshapes the the provided image. This is down by padding the image in both cols and rows.
+    """Reshapes the provided image. This is dowe by padding the image in both cols and rows.
 
     Parameters:
     img: the image as a numpy array (2-dim)
@@ -128,7 +128,7 @@ def reshape_28x28(img : np.ndarray) -> np.ndarray:
     return reshaped_img
 
 def symmetric(img : np.ndarray) -> np.ndarray:
-    """Removes any borders, resizes into 20x20 and the pads the image to get 28x28.
+    """Removes any borders, resizes into 20x20 and then pads the image to get 28x28.
        The resulting image has symmetric borders.
 
     Parameters:
@@ -167,8 +167,8 @@ def adjust_images(images : np.ndarray) -> np.ndarray:
     """
     len = images.shape[0]
     for i in range(0, len):
-        #img = deskew(images[i])
-        img = images[i]
+        img = deskew(images[i])
+        #img = images[i]
         images[i] = symmetric(img)
     return images
 
