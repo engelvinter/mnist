@@ -1,3 +1,21 @@
+"""
+    This module implements functions for the mnist digits
+    There are functions for:
+    * listing files in a directory
+    * reading images from a directory
+    * deskewing
+    * removing empty lines around digit
+    * resizing image into 20x20 or 28x28
+    * normalize color data in image
+    * invert image
+    * plotting image
+    There are also compound functions that uses the above functions:
+    * symmetric
+    * adjust_images
+
+    Normally you only have to use the following two functions:
+    * adjust_images and normalize_images
+"""
 
 import os
 import numpy as np
