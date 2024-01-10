@@ -4,7 +4,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import argparse
 from rich.console import Console
 
-from functions import read_image_files, adjust_images, normalize_images
+from functions import read_image_files, adjust_images, normalize_images, invert
 
 from keras import models
 import numpy as np
@@ -13,6 +13,7 @@ console = Console()
 
 def main():
     parser = argparse.ArgumentParser(description="The console programs predicts a result using the given input data and given model")
+    parser.add_argument("--invert", "-i", action="store_true", default=False, help="inverts the images")
     parser.add_argument("model_input_file", help="the model to use in prediction")
     parser.add_argument("path_digits", help="path to digits to use as input data")
     args = parser.parse_args()
@@ -21,6 +22,9 @@ def main():
     model = models.load_model(args.model_input_file)
     console.log("Reading digit files")
     filenames, images = read_image_files(args.path_digits)
+    if args.invert:
+        console.log("Inverting images")
+        images = invert(images)
     console.log("Adjusting digits")
     adjusted_images = adjust_images(images)
     console.log("Normalizing images")
