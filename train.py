@@ -28,10 +28,24 @@ def load_data() -> DataSet:
     (data.train_images, data.train_labels), (data.test_images, data.test_labels) = mnist.load_data()
     return data
 
-def create_model() -> Sequential:
+def create_one_layer_model() -> Sequential:
     console.log("Creating model")
     model = Sequential()
     model.add(Flatten(input_shape=(28, 28, 1)))  # Flatten the input images
+    model.add(Dense(128, activation='relu'))  # Dense layer with 128 units and ReLU activation
+    model.add(Dense(10, activation='softmax'))  # Output layer with 10 units (for each digit) and softmax activation
+
+    model.compile(optimizer='adam',  # You can use other optimizers like 'sgd' or 'rmsprop'
+              loss='categorical_crossentropy',  # For multi-class classification problems
+              metrics=['accuracy'])
+    
+    return model
+
+def create_two_layer_model() -> Sequential:
+    console.log("Creating model")
+    model = Sequential()
+    model.add(Flatten(input_shape=(28, 28, 1)))  # Flatten the input images
+    model.add(Dense(256, activation='relu'))  # Dense layer with 128 units and ReLU activation
     model.add(Dense(128, activation='relu'))  # Dense layer with 128 units and ReLU activation
     model.add(Dense(10, activation='softmax'))  # Output layer with 10 units (for each digit) and softmax activation
 
@@ -70,7 +84,7 @@ def main():
     args = parser.parse_args()
 
     data_set = load_data()
-    model = create_model()
+    model = create_two_layer_model()
 
     train(model, data_set, args.epochs)
     model.save(args.model_result_file)
