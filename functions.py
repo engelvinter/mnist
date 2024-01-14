@@ -27,6 +27,13 @@ from typing import List
 
 SZ = 28 # images are SZ x SZ grayscale
 
+def is_running_in_jupyter() -> bool:
+    try:
+        get_ipython()
+        return True
+    except NameError:
+        return False
+
 def list_image_files(path : str) -> List[str]:
     """List jpg/png files in a specified path
 
