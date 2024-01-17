@@ -23,6 +23,7 @@ from PIL import Image
 import cv2
 import math
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 from typing import List
 
 SZ = 28 # images are SZ x SZ grayscale
@@ -223,3 +224,33 @@ def plot(img : np.ndarray) -> None:
     None
     """
     plt.imshow(img, cmap='grey')
+
+def grid_plot(path : str, nbr_cols : int) -> None:
+    """Plots all the images in the provided directory as a grid
+       with the specified number of images
+
+       Parameters:
+       path: the full path to the images
+       nbr_cols: number of columns in the image grid
+
+       Returns:
+       None
+    """
+    (_, images) = read_image_files(path)
+    nbr_rows = len(images) // nbr_cols + (len(images) % nbr_cols > 0)
+
+    fig, axes = plt.subplots(nbr_rows, nbr_cols)
+
+    # Flatten the axes array if there's only one row
+    if nbr_rows == 1:
+        axes = axes.reshape(1, -1)
+
+    for i, img in enumerate(images):
+        row_idx = i // nbr_cols
+        col_idx = i % nbr_cols
+        axes[row_idx, col_idx].imshow(img, cmap='grey')
+        axes[row_idx, col_idx].axis('off')
+
+    # Adjust layout
+    plt.tight_layout()
+    plt.show()
